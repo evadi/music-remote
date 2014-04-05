@@ -1,0 +1,26 @@
+{
+  "name": "Play Remote",
+  "description": "Remote control your Google Play music",
+  "version": "0.1",
+  "permissions": [
+    "activeTab",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["js/controller.js", "js/router.js"]
+  },
+  "content_scripts": [
+      {
+         "matches": ["https://play.google.com/music/*"],
+         "js": [
+              "js/jquery.js",
+              "js/content_script.js"
+          ]
+      }
+   ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_title": "Open remote control player"
+  },
+  "manifest_version": 2
+}

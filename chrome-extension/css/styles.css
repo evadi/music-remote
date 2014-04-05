@@ -1,0 +1,31 @@
+.hidden{
+   display:none;
+}
+
+.fl {
+   float: left;
+}
+.fr {
+   float: right;
+}
+
+.progress{
+   background: #bbb;
+   margin:10px 0;
+   position: relative;
+   height:5px;
+   clear:both;
+}
+
+.progress .current{
+   background: blue;
+   position: absolute;
+   top:0;
+   bottom:0;
+   left:0;
+}
+
+.star .rating.selected{
+   background: blue;
+   color:white;
+}

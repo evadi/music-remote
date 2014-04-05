@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <script type="text/javascript" src="js/remote.js"></script>
+      <script type="text/javascript" src="js/knockout.js"></script>
+   </head>
+   <body>
+      <div id="launchTab" data-bind="visible: remoteState() === 'notab'">
+         <p>A Google Play Music tab can't be found, please sign in;</p>
+         <button id="signIn" data-bind="click: openPlayer">Sign In</button>
+      </div>
+      <div id="player" data-bind="visible: remoteState() !== 'notab'">
+         <p data-bind="text: songTitle"></p>
+         <p data-bind="text: artistAlbum"></p>
+         <img data-bind="attr: { src: coverImageUrl }" width="62" height="62" />
+         <div>
+            <button id="rewind" data-bind="click: rewind, disable: rewindState() === 'disabled'">Back</button>
+            <button id="play-pause" data-bind="click: playPause, disable: playState() === 'disabled', text: playLabel"></button>
+            <button id="forward" data-bind="click: forward, disable: forwardState() === 'disabled'">Next</button>
+         </div>
+         <div>
+            <button id="repeat" data-bind="click: repeat, text: repeatLabel"></button>
+            <button id="shuffle" data-bind="click: shuffle, text: shuffleLabel"></button>
+         </div>
+         <div>
+            <div class="thumb" data-bind="if: ratingType() === 'thumb'">
+               <button id="thumbs-up" class="rating" data-rating="5" data-bind="click: rating, text: thumbsUpLabel, disable: playState() === 'disabled', css: { selected: ratingState() == 5 }"></button>
+               <button id="thumbs-down" class="rating" data-rating="1" data-bind="click: rating, text: thumbsDownLabel, disable: playState() === 'disabled', css: { selected: ratingState() == 1 }"></button>
+            </div>
+            <div class="star" data-bind="if: ratingType() === 'star'">
+               <button class="rating" data-rating="1" data-bind="click: rating, click: rating, click: rating, click: rating, css: { selected: ratingState() >= 1 }, disable: playState() === 'disabled'">1</button>
+               <button class="rating" data-rating="2" data-bind="click: rating, click: rating, click: rating, css: { selected: ratingState() >= 2 }, disable: playState() === 'disabled'">2</button>
+               <button class="rating" data-rating="3" data-bind="click: rating, click: rating, css: { selected: ratingState() >= 3 }, disable: playState() === 'disabled'">3</button>
+               <button class="rating" data-rating="4" data-bind="click: rating, css: { selected: ratingState() >= 4 }, disable: playState() === 'disabled', disable: playState() === 'disabled'">4</button>
+               <button class="rating" data-rating="5" data-bind="click: rating, css: { selected: ratingState() === 5 }, disable: playState() === 'disabled'">5</button>
+            </div>
+            <input type="hidden" class="rating" data-rating="0" data-bind="css: { selected: ratingState() == 0 }" />
+         </div>
+         <div>
+            <span class="fl" data-bind="text: progress.current"></span> <span class="fr" data-bind="text: progress.duration"></span>
+            <div class="progress">
+               <div class="current" data-bind="style: { width: progress.percentage }"></div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
