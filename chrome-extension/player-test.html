@@ -5,11 +5,14 @@
       <script type="text/javascript" src="js/knockout.js"></script>
    </head>
    <body>
-      <div id="launchTab" data-bind="visible: remoteState() === 'notab'">
+      <div id="launchTab" data-bind="if: remoteState() === 'notab'">
          <p>A Google Play Music tab can't be found, please sign in;</p>
          <button id="signIn" data-bind="click: openPlayer">Sign In</button>
       </div>
-      <div id="player" data-bind="visible: remoteState() !== 'notab'">
+      <div id="launchSong" data-bind="if: remoteState() === 'nosong'">
+         <p>No song has been selected. <a href="#">Goto the tab running Google Play Music</a> and selected a song</p>
+      </div>
+      <div id="player" data-bind="visible: remoteState() === 'hassong'">
          <p data-bind="text: songTitle"></p>
          <p data-bind="text: artistAlbum"></p>
          <img data-bind="attr: { src: coverImageUrl }" width="62" height="62" />

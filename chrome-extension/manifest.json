@@ -4,10 +4,11 @@
   "version": "0.1",
   "permissions": [
     "activeTab",
-    "tabs"
+    "tabs",
+    "background"
   ],
   "background": {
-    "scripts": ["js/controller.js", "js/router.js"]
+    "scripts": ["js/controller.js"]
   },
   "content_scripts": [
       {
@@ -22,5 +23,28 @@
   "browser_action": {
     "default_title": "Open remote control player"
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "commands": {
+     "previous_song": {
+        "suggested_key": {
+            "default": "MediaPrevTrack"
+        },
+        "description": "Previous Song",
+        "global": true
+     },
+     "play-pause_song": {
+        "suggested_key": {
+           "default": "MediaPlayPause"
+        },
+        "description": "Play/Pause Song",
+        "global": true
+     },
+     "next_song": {
+        "suggested_key": {
+           "default": "MediaNextTrack"
+        },
+        "description": "Next Song",
+        "global": true
+     }
+  }
 }

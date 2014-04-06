@@ -1,8 +1,16 @@
 window.onload = function()
 {
    var defaultWindowTitle = window.document.title;
-    var Remote = (function() {
+   
+   var commands = Object.freeze({
+      NEXT: "next_song",
+      PLAYPAUSE: "play-pause_song",
+      PREVIOUS: "previous_song"
+   });
+   
+   var Remote = (function() {
       var $this;
+      var controller;
       var viewModel = {
          remoteState: ko.observable("notab"),
          playState: ko.observable("disabled"),
@@ -74,6 +82,7 @@ window.onload = function()
       //constructor
       function Remote(){
          $this = this;
+         $this.controller = chrome.extension.getBackgroundPage().controller;
       }
       
       Remote.prototype.initialise = function()
@@ -84,37 +93,44 @@ window.onload = function()
       
       Remote.prototype.playPause = function()
       {
-         chrome.extension.sendRequest({ action: "play-pause" });
+         $this.controller.playPause();
+         //chrome.extension.sendRequest({ action: actions.PLAY_PAUSE });
       };
       
       Remote.prototype.rewind = function()
       {
-         chrome.extension.sendRequest({ action: "rewind" });
+         $this.controller.rewind();
+         //chrome.extension.sendRequest({ action: actions.REWIND });
       };
       
       Remote.prototype.forward = function()
       {
-         chrome.extension.sendRequest({ action: "forward" });
+         $this.controller.forward();
+         //chrome.extension.sendRequest({ action: actions.FORWARD });
       };
       
       Remote.prototype.repeat = function()
       {
-         chrome.extension.sendRequest({ action: "repeat" });
+         $this.controller.repeat();
+         //chrome.extension.sendRequest({ action: actions.REPEAT });
       };
       
       Remote.prototype.shuffle = function()
       {
-         chrome.extension.sendRequest({ action: "shuffle" });
+         $this.controller.shuffle();
+         //chrome.extension.sendRequest({ action: actions.SHUFFLE });
       };
       
       Remote.prototype.rating = function(value)
       {
-         chrome.extension.sendRequest({ action: "rating", value: value });
+         $this.controller.rating(value);
+         //chrome.extension.sendRequest({ action: actions.RATING, value: value });
       };
       
       Remote.prototype.openPlayer = function()
       {
-         chrome.extension.sendRequest({ action: "open-player" });
+         $this.controller.openPlayer();
+         //chrome.extension.sendRequest({ action: actions.OPEN_PLAYER });
       };
       
       Remote.prototype.processUpdate = function(model)
@@ -175,6 +191,21 @@ window.onload = function()
       else if (request.action == "connection-lost")
       {
          remote.processUpdate();
+      }
+   });
+   
+   chrome.commands.onCommand.addListener(function(command) {
+      if (command == commands.NEXT)
+      {
+         remote.forward();
+      }
+      else if (command == commands.PLAYPAUSE)
+      {
+         remote.playPause();
+      }
+      else if (command == commands.PREVIOUS)
+      {
+         remote.rewind();
       }
    });
    

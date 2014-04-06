@@ -4,6 +4,7 @@ var Player = (function()
    var container;
    var intervalId;
    var delay = 300;
+   
    var sendUpdate = function()
    {
       //scrape the page for current state
@@ -232,7 +233,7 @@ var Player = (function()
 $(function() {
    
    var player = new Player();
-    
+   
    chrome.extension.sendRequest({ action: "setup" });
     
    chrome.runtime.onMessage.addListener(function(request, sender, response) {
