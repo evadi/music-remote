@@ -4,7 +4,7 @@
       <script type="text/javascript" src="js/remote.js"></script>
       <script type="text/javascript" src="js/knockout.js"></script>
    </head>
-   <body>
+   <body id="player-container">
       <div id="launchTab" data-bind="if: remoteState() === 'notab'">
          <p>A Google Play Music tab can't be found, please sign in;</p>
          <button id="signIn" data-bind="click: openPlayer">Sign In</button>
