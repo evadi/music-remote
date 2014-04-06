@@ -1,8 +1,5 @@
-var Player = (function()
-{
-   var $this;
-   var container;
-   var intervalId;
+var Player = (function () {
+   var $this, container, intervalId;
    var delay = 300;
    
    var sendUpdate = function()
@@ -14,14 +11,12 @@ var Player = (function()
       chrome.extension.sendRequest({ action:"update", model: viewModel });
    };
    
-   function Player()
-   {
-      $this = this;
-      container = $("#player");
+   function Player() {
+        $this = this;
+        container = $("#player");
    }
    
-   Player.prototype.forceUpdate = function()
-   {
+   Player.prototype.forceUpdate = function() {
       //clear any timeouts currently active
       clearInterval(intervalId);
       
@@ -32,57 +27,48 @@ var Player = (function()
       $this.scheduleUpdate();
    };
    
-   Player.prototype.scheduleUpdate = function()
-   {
+   Player.prototype.scheduleUpdate = function() {
       intervalId = setInterval(function()
       {
          sendUpdate();
       }, delay);
    };
    
-   Player.prototype.cancelSchedule = function()
-   {
+   Player.prototype.cancelSchedule = function() {
       clearInterval(intervalId);
    }
    
-   Player.prototype.play = function()
-   {
+   Player.prototype.play = function() {
       $("button[data-id='play-pause']").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.rewind = function()
-   {
+   Player.prototype.rewind = function() {
       $("button[data-id='rewind']").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.forward = function()
-   {
+   Player.prototype.forward = function() {
       $("button[data-id='forward']").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.repeat = function()
-   {
+   Player.prototype.repeat = function() {
       $("button[data-id='repeat']").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.shuffle = function()
-   {
+   Player.prototype.shuffle = function() {
       $("button[data-id='shuffle']").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.rating = function(value)
-   {
+   Player.prototype.rating = function(value) {
       $(".rating-container li[data-rating=" + value + "]").click();
       $this.forceUpdate();
    };
    
-   Player.prototype.toViewModel = function()
-   {
+   Player.prototype.toViewModel = function() {
       //create viewmodel and set default values
       var viewModel = new Object();
       viewModel.play = "disabled";
