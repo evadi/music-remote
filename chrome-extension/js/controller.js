@@ -1,6 +1,8 @@
 var remoteWindow;
 var tab;
 var _controller;
+var remoteHeight = 400;
+var remoteWidth = 300;
 
 var actions = Object.freeze({
    PLAY_PAUSE: "play-pause",
@@ -15,67 +17,95 @@ var actions = Object.freeze({
    REMOTE_UPDATE: "remote-update"
 });
 
+var remoteSize = Object.freeze({
+   FULL: 400,
+   HALF: 250,
+   CONTROLS: 100
+});
+
 
 //static controller
 var controller = Object.freeze({
    
-   setup: function(source) {
+   setup: function (source) {
       tab = source;
    },
    
    //play or pause has been sent from the remote player
-   playPause: function()   {
+   playPause: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.PLAY_PAUSE });
    },
    
    //rewind has been sent from the remote player
-   rewind: function() {
+   rewind: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.REWIND });
    },
    
    //forward has been sent from the remote player
-   forward: function()   {
+   forward: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.FORWARD });
    },
    
    //repeat has been sent from the remote player
-   repeat: function()   {
+   repeat: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.REPEAT });
    },
    
    //shuffle has been sent from the remote player
-   shuffle: function()   {
+   shuffle: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.SHUFFLE });
    },
    
    //rating up has been sent from the remote player
-   rating: function(value)   {
+   rating: function (value) {
       chrome.tabs.sendMessage(tab.id, { action: actions.RATING, value: value });
    },
    
    //inform the player that a remote has become available
-   remoteAvailable: function()   {
+   remoteAvailable: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.REMOTE_AVAILABLE });
    },
    
    //inform the player that a remote has been closed
-   remoteUnavailable: function()   {
+   remoteUnavailable: function () {
       chrome.tabs.sendMessage(tab.id, { action: actions.REMOTE_UNAVAILABLE });
    },
    
    //inform the remote that the connection to the player has been lost
-   connectionLost: function()   {
+   connectionLost: function ()   {
       chrome.runtime.sendMessage({ action: actions.CONNECTION_LOST });
    },
    
    //update has been sent from the content script
-   updateRemote: function(viewModel)   {
+   updateRemote: function (viewModel) {
       //sends a message to anyone that is listening that can deal with this action
       chrome.runtime.sendMessage({ action: actions.REMOTE_UPDATE, model: viewModel });
    },
    
+   resizeRemote: function () {
+      var updateData = { height: remoteHeight };
+      
+      chrome.windows.get(remoteWindow.id, function (theWindow) {
+         remoteWindow = theWindow;
+         
+         if (remoteWindow.height == remoteSize.FULL)
+         {
+            updateData.height = remoteSize.HALF;
+         }
+         else if (remoteWindow.height == remoteSize.HALF)
+         {
+            updateData.height = remoteSize.CONTROLS;
+         }
+         else if (remoteWindow.height == remoteSize.CONTROLS)
+         {
+            updateData.height = remoteSize.FULL;
+         }
+         chrome.windows.update(remoteWindow.id, updateData);
+      });
+   },
+   
    //opens a google play music tab instance
-   openPlayer: function()  {
+   openPlayer: function () {
       chrome.tabs.create({ url: "https://play.google.com/music" });
    }
       
@@ -102,7 +132,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse)
 chrome.browserAction.onClicked.addListener(function(currentTab) {
    if (remoteWindow === undefined)
    {
-      chrome.windows.create({ url: 'player-test.html', type: 'panel', width: 300, height: 400, focused: true }, function(window)
+      chrome.windows.create({ url: 'player-test.html', type: 'panel', width: remoteWidth, height: remoteHeight, focused: true }, function(window)
       {
          remoteWindow = window;
          

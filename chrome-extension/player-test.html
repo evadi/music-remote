@@ -13,6 +13,9 @@
          <p>No song has been selected. <a href="#">Goto the tab running Google Play Music</a> and selected a song</p>
       </div>
       <div id="player" data-bind="visible: remoteState() === 'hassong'">
+         <div>
+            <button data-bind="click: toggleSize">Toggle Size</button>
+         </div>
          <p data-bind="text: songTitle"></p>
          <p data-bind="text: artistAlbum"></p>
          <img data-bind="attr: { src: coverImageUrl }" width="62" height="62" />

@@ -41,6 +41,9 @@ window.onload = function()
             var ratingValue = e.target.getAttribute("data-rating");
             $this.rating(ratingValue);
          },
+         toggleSize: function() {
+            $this.resize();
+         },
          openPlayer: function() { $this.openPlayer(); }
       }
       viewModel.progress.percentage = ko.computed(function() {
@@ -80,57 +83,46 @@ window.onload = function()
       }, viewModel);
          
       //constructor
-      function Remote(){
+      function Remote () {
          $this = this;
          $this.controller = chrome.extension.getBackgroundPage().controller;
       }
       
-      Remote.prototype.initialise = function()
-      {
+      Remote.prototype.initialise = function () {
          $this.model = viewModel;
          ko.applyBindings(viewModel);
       };
       
-      Remote.prototype.playPause = function()
-      {
+      Remote.prototype.playPause = function () {
          $this.controller.playPause();
-         //chrome.extension.sendRequest({ action: actions.PLAY_PAUSE });
       };
       
-      Remote.prototype.rewind = function()
-      {
+      Remote.prototype.rewind = function () {
          $this.controller.rewind();
-         //chrome.extension.sendRequest({ action: actions.REWIND });
       };
       
-      Remote.prototype.forward = function()
-      {
+      Remote.prototype.forward = function () {
          $this.controller.forward();
-         //chrome.extension.sendRequest({ action: actions.FORWARD });
       };
       
-      Remote.prototype.repeat = function()
-      {
+      Remote.prototype.repeat = function () {
          $this.controller.repeat();
-         //chrome.extension.sendRequest({ action: actions.REPEAT });
       };
       
-      Remote.prototype.shuffle = function()
-      {
+      Remote.prototype.shuffle = function () {
          $this.controller.shuffle();
-         //chrome.extension.sendRequest({ action: actions.SHUFFLE });
       };
       
-      Remote.prototype.rating = function(value)
-      {
+      Remote.prototype.rating = function (value) {
          $this.controller.rating(value);
-         //chrome.extension.sendRequest({ action: actions.RATING, value: value });
       };
       
-      Remote.prototype.openPlayer = function()
-      {
+      Remote.prototype.openPlayer = function () {
          $this.controller.openPlayer();
-         //chrome.extension.sendRequest({ action: actions.OPEN_PLAYER });
+      };
+      
+      Remote.prototype.resize = function () {
+         $this.controller.resizeRemote();
       };
       
       Remote.prototype.processUpdate = function(model)
