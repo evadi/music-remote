@@ -8,6 +8,13 @@ window.onload = function()
       PREVIOUS: "previous_song"
    });
    
+   ko.extenders.logChange = function(target, option) {
+       target.subscribe(function(newValue) {
+          console.log(option + ": " + newValue);
+       });
+       return target;
+   };
+   
    var Remote = (function() {
       var $this;
       var controller;
@@ -49,38 +56,6 @@ window.onload = function()
       viewModel.progress.percentage = ko.computed(function() {
          return ((this.currentMilli() / this.maxMilli()) * 100) + "%";
       }, viewModel.progress);
-      viewModel.playLabel = ko.computed(function() {
-         return this.playState() == "playing" ? "Pause" : "Play";
-      }, viewModel);
-      viewModel.artistAlbum = ko.computed(function() {
-         return this.artist() !== "" ? this.artist() + " - " + this.album() : "";
-      }, viewModel);
-      viewModel.songArtist = ko.computed(function() {
-         return this.songTitle() !== "" ? this.songTitle() + " - " + this.artist() : "";
-      }, viewModel);
-      viewModel.repeatLabel = ko.computed(function() {
-         if (this.repeatState() == "LIST_REPEAT")
-         {
-            return "Playlist Repeat";
-         }
-         else if (this.repeatState() == "SINGLE_REPEAT")
-         {
-            return "Song Repeat";
-         }
-         else
-         {
-            return "No Repeat";
-         }
-      }, viewModel);
-      viewModel.shuffleLabel = ko.computed(function() {
-         return this.shuffleState() == "ALL_SHUFFLE" ? "Suffle" : "No Suffle";
-      }, viewModel);
-      viewModel.thumbsUpLabel = ko.computed(function() {
-         return this.ratingState() == 5 ? "Up: true" : "Up: false";
-      }, viewModel);
-      viewModel.thumbsDownLabel = ko.computed(function() {
-         return this.ratingState() == 1 ? "Down: true" : "Down: false";
-      }, viewModel);
          
       //constructor
       function Remote () {
@@ -130,7 +105,6 @@ window.onload = function()
          if (model === undefined || model === null)
          {
             $this.model.remoteState("notab");
-            window.document.title = defaultWindowTitle;
             
             //clear the current viewModel to defaults
          }
@@ -154,12 +128,10 @@ window.onload = function()
             if (model.songTitle === "")
             {
                $this.model.remoteState("nosong");
-               window.document.title = defaultWindowTitle;
             }
             else
             {
                $this.model.remoteState("hassong");
-               window.document.title = $this.model.songArtist();
             }
          }
       }

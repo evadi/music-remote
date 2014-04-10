@@ -1,7 +1,6 @@
 var remoteWindow;
 var tab;
 var _controller;
-var remoteHeight = 400;
 var remoteWidth = 300;
 
 var actions = Object.freeze({
@@ -18,7 +17,7 @@ var actions = Object.freeze({
 });
 
 var remoteSize = Object.freeze({
-   FULL: 400,
+   FULL: 408,
    HALF: 250,
    CONTROLS: 100
 });
@@ -83,7 +82,7 @@ var controller = Object.freeze({
    },
    
    resizeRemote: function () {
-      var updateData = { height: remoteHeight };
+      var updateData = { height: remoteSize.FULL };
       
       chrome.windows.get(remoteWindow.id, function (theWindow) {
          remoteWindow = theWindow;
@@ -132,7 +131,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse)
 chrome.browserAction.onClicked.addListener(function(currentTab) {
    if (remoteWindow === undefined)
    {
-      chrome.windows.create({ url: 'player-test.html', type: 'panel', width: remoteWidth, height: remoteHeight, focused: true }, function(window)
+      chrome.windows.create({ url: 'player-test.html', type: 'panel', width: remoteWidth, height: remoteSize.FULL, focused: true }, function(window)
       {
          remoteWindow = window;
          
@@ -236,7 +235,7 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo)
 function isTabValid(selectedTab)
 {
    var url = selectedTab.url;
-   var n = url.indexOf("https://play.google.com");
+   var n = url.indexOf("https://play.google.com/music");
    if (n > -1)
    {
       return true;

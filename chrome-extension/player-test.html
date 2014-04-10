@@ -1,5 +1,6 @@
 <html>
    <head>
+      <link href='http://fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
       <link rel="stylesheet" type="text/css" href="css/styles.css">
       <script type="text/javascript" src="js/remote.js"></script>
       <script type="text/javascript" src="js/knockout.js"></script>
@@ -12,42 +13,61 @@
       <div id="launchSong" data-bind="if: remoteState() === 'nosong'">
          <p>No song has been selected. <a href="#">Goto the tab running Google Play Music</a> and selected a song</p>
       </div>
-      <div id="player" data-bind="visible: remoteState() === 'hassong'">
-         <div>
-            <button data-bind="click: toggleSize">Toggle Size</button>
-         </div>
-         <p data-bind="text: songTitle"></p>
-         <p data-bind="text: artistAlbum"></p>
-         <img data-bind="attr: { src: coverImageUrl }" width="62" height="62" />
-         <div>
-            <button id="rewind" data-bind="click: rewind, disable: rewindState() === 'disabled'">Back</button>
-            <button id="play-pause" data-bind="click: playPause, disable: playState() === 'disabled', text: playLabel"></button>
-            <button id="forward" data-bind="click: forward, disable: forwardState() === 'disabled'">Next</button>
-         </div>
-         <div>
-            <button id="repeat" data-bind="click: repeat, text: repeatLabel"></button>
-            <button id="shuffle" data-bind="click: shuffle, text: shuffleLabel"></button>
-         </div>
-         <div>
-            <div class="thumb" data-bind="if: ratingType() === 'thumb'">
-               <button id="thumbs-up" class="rating" data-rating="5" data-bind="click: rating, text: thumbsUpLabel, disable: playState() === 'disabled', css: { selected: ratingState() == 5 }"></button>
-               <button id="thumbs-down" class="rating" data-rating="1" data-bind="click: rating, text: thumbsDownLabel, disable: playState() === 'disabled', css: { selected: ratingState() == 1 }"></button>
+      
+      
+      <div id="music-player" data-bind="if: remoteState() === 'hassong'">
+        <div id="track">
+            <div class="art" data-bind="style: { backgroundImage: 'url(\'' + coverImageUrl() + '\')' }"></div>
+            <div class="overlay">
+                <span class="song-title" data-bind="text: songTitle"></span>
+                <span class="song-artist"><a href="#" data-bind="text: artist"></a> - <a href="#" data-bind="text: album"></a></span>
+                <div class="ratings" data-bind="if: ratingType() === 'thumb'">
+                    <a href="#" class="rating thumb up" title="Thumbs up" data-rating="5" data-bind="click: rating, css: { active: ratingState() === 5 }"></a>
+                    <a href="#" class="rating thumb down" title="Thumbs down" data-rating="1" data-bind="click: rating, css: { active: ratingState() === 1 }"></a>
+                </div>
             </div>
-            <div class="star" data-bind="if: ratingType() === 'star'">
-               <button class="rating" data-rating="1" data-bind="click: rating, click: rating, click: rating, click: rating, css: { selected: ratingState() >= 1 }, disable: playState() === 'disabled'">1</button>
-               <button class="rating" data-rating="2" data-bind="click: rating, click: rating, click: rating, css: { selected: ratingState() >= 2 }, disable: playState() === 'disabled'">2</button>
-               <button class="rating" data-rating="3" data-bind="click: rating, click: rating, css: { selected: ratingState() >= 3 }, disable: playState() === 'disabled'">3</button>
-               <button class="rating" data-rating="4" data-bind="click: rating, css: { selected: ratingState() >= 4 }, disable: playState() === 'disabled', disable: playState() === 'disabled'">4</button>
-               <button class="rating" data-rating="5" data-bind="click: rating, css: { selected: ratingState() === 5 }, disable: playState() === 'disabled'">5</button>
+        </div>
+        <div id="controls">
+            <div id="minimize" data-bind="click: toggleSize"></div>
+            
+            <div id="progress">
+                <div class="percentage" data-bind="style: { width: progress.percentage }">
+                    <div class="percentage" style="width:36%">
+                        <span data-bind="text: progress.current">0:00</span>
+                        <span data-bind="text: progress.duration">4:50</span>
+                    </div>
+                </div>
             </div>
-            <input type="hidden" class="rating" data-rating="0" data-bind="css: { selected: ratingState() == 0 }" />
-         </div>
-         <div>
-            <span class="fl" data-bind="text: progress.current"></span> <span class="fr" data-bind="text: progress.duration"></span>
-            <div class="progress">
-               <div class="current" data-bind="style: { width: progress.percentage }"></div>
+            
+            <div class="btn">
+                <a href="#" title="Repeat" data-bind="click: repeat">
+                    <i class="repeat" data-bind="css: { active: repeatState() === 'LIST_REPEAT', one: repeatState() === 'SINGLE_REPEAT' }"></i>
+                </a>
             </div>
-         </div>
+            <div class="btn">
+                <a href="#" title="Previous song" data-bind="click: rewind">
+                    <i class="previous-song" data-bind="css: { disabled: rewindState() === 'disabled' }"></i>
+                </a>
+            </div>
+            <div class="btn">
+                <a href="#" title="Play" data-bind="click: playPause">
+                    <i class="play" data-bind="css: { active: playState() === 'playing', disabled: playState() === 'disabled' }"></i>
+                </a>
+            </div>
+            <div class="btn">
+                <a href="#" title="Next song" data-bind="click: forward">
+                    <i class="next-song" data-bind="css: { disabled: forwardState() === 'disabled' }"></i>
+                </a>
+            </div>
+            <div class="btn">
+                <a href="#" title="Shuffle" data-bind="click: shuffle">
+                    <i class="shuffle" data-bind="css: { active: shuffleState() === 'ALL_SHUFFLE' }"></i>
+                </a>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
       </div>
+      
    </body>
 </html>
