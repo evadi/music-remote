@@ -1,0 +1,50 @@
+{
+  "name": "Play Remote",
+  "description": "Remote control your Google Play music",
+  "version": "0.1",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "background"
+  ],
+  "background": {
+    "scripts": ["js/controller.js"]
+  },
+  "content_scripts": [
+      {
+         "matches": ["https://play.google.com/music/*"],
+         "js": [
+              "js/jquery.js",
+              "js/content_script.js"
+          ]
+      }
+   ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_title": "Open remote control player"
+  },
+  "manifest_version": 2,
+  "commands": {
+     "previous_song": {
+        "suggested_key": {
+            "default": "MediaPrevTrack"
+        },
+        "description": "Previous Song",
+        "global": true
+     },
+     "play-pause_song": {
+        "suggested_key": {
+           "default": "MediaPlayPause"
+        },
+        "description": "Play/Pause Song",
+        "global": true
+     },
+     "next_song": {
+        "suggested_key": {
+           "default": "MediaNextTrack"
+        },
+        "description": "Next Song",
+        "global": true
+     }
+  }
+}

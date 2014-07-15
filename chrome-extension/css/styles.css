@@ -1,0 +1,389 @@
+.hidden{
+   display:none;
+}
+
+.fl {
+   float: left;
+}
+.fr {
+   float: right;
+}
+
+.progress{
+   background: #bbb;
+   margin:10px 0;
+   position: relative;
+   height:5px;
+   clear:both;
+}
+
+.progress .current{
+   background: blue;
+   position: absolute;
+   top:0;
+   bottom:0;
+   left:0;
+}
+
+.star .rating.selected{
+   background: blue;
+   color:white;
+}
+
+
+/* lewis styles */
+
+body {
+    background:#ddd;
+    font-family: 'Muli', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size:16px;
+    margin:0;
+    padding:0;
+}
+
+.clear {
+    clear:both;
+}
+
+#google-bar {
+    background:#3a3d3d;
+    height:40px;
+}
+
+#music-player {
+    display:block;
+}
+
+#music-player #track {
+    height:300px;
+    position:relative;
+}
+
+#music-player #track .art {
+   position:absolute;
+   top:0;
+   bottom:0;
+   left:0;
+   right:0;
+   width:100%;
+   background-size:cover;
+   background-position:50% 50%;
+}
+
+#music-player #track .overlay {
+    background: -moz-linear-gradient(top, rgba(58,61,61,1) 0%, rgba(58,61,61,0.82) 26%, rgba(58,155,217,0.3) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(58,61,61,1)), color-stop(26%,rgba(58,61,61,0.82)), color-stop(100%,rgba(58,155,217,0.3)));
+    background: -webkit-linear-gradient(top, rgba(58,61,61,1) 0%,rgba(58,61,61,0.82) 26%,rgba(58,155,217,0.3) 100%);
+    background: -o-linear-gradient(top, rgba(58,61,61,1) 0%,rgba(58,61,61,0.82) 26%,rgba(58,155,217,0.3) 100%);
+    background: -ms-linear-gradient(top, rgba(58,61,61,1) 0%,rgba(58,61,61,0.82) 26%,rgba(58,155,217,0.3) 100%);
+    background: linear-gradient(to bottom, rgba(58,61,61,1) 0%,rgba(58,61,61,0.82) 26%,rgba(58,155,217,0.3) 100%);
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    text-transform:uppercase;
+    text-align:center;
+    letter-spacing:1px
+}
+
+#music-player #track .overlay .song-title{
+    color:#fff;
+    display:block;
+    font-size:18px;
+    font-weight:400;
+    margin:20px 0 0 0;
+}
+
+#music-player #track .overlay .song-artist{
+    color:#fff;
+    display:block;
+    font-size:14px;
+    font-weight:300;
+}
+
+#music-player #track .overlay .song-artist a {
+    color:rgba(255,255,255,0.8);
+    padding:0;
+    margin:0;
+}
+
+#music-player #track .overlay .song-artist a:hover {
+    color:#fff;
+    border-bottom:1px dotted #fff;
+    text-decoration:none;
+}
+
+#music-player #track .overlay .song-album {
+    color:rgba(255,255,255,0.8);
+    display:block;
+    font-size:14px;
+}
+
+#music-player #track .overlay:hover .ratings {
+    height:45px;
+}
+
+#music-player #track .overlay .ratings {
+    background:rgba(58,61,61,0.9);
+    box-sizing:border-box;
+    position:absolute;
+    height:0;
+    left:0;
+    right:0;
+    bottom:0;
+    transition:all 0.2s ease;
+}
+
+#music-player #track .overlay .ratings .thumb {
+    background:url(images/control-sprite.png);
+    display:inline-block;
+    opacity:0.8;
+    width:21px;
+    height:20px;
+    margin:10px 5px;
+    transition:all 0.2s ease;
+}
+
+#music-player #track .overlay .ratings .thumb.up {
+    background-position:-170px 0;
+}
+
+    #music-player #track .overlay .ratings .thumb.up.active {
+        background-position:-170px -30px;
+    }
+
+#music-player #track .overlay .ratings .thumb.down {
+    position:relative;
+    top:3px;
+    background-position:-199px -3px;
+}
+
+    #music-player #track .overlay .ratings .thumb.down.active {
+        background-position:-199px -33px;
+    }
+
+#music-player #track .overlay .ratings .thumb:hover {
+    opacity:1;
+}
+
+#music-player #track .overlay .ratings .thumb.active {
+    opacity:1;
+}
+
+#music-player #controls {
+    background:#fff;
+    padding:30px 0 25px 0;
+    position:fixed;
+    top: 300px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#music-player #controls #minimize {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    border-color: transparent transparent #c8ccd0 transparent;
+    opacity:0.5;
+    cursor:pointer;
+    position:absolute;
+    bottom:0;
+    right:0;
+    transition:all 0.2s ease;
+}
+
+#music-player #controls #minimize:hover {
+    border-width:0 0 15px 15px;
+    opacity:1;
+}
+
+#music-player #controls #minimize.a1 {
+    border-color: transparent transparent #3a9bd9 transparent;
+}
+
+#music-player #controls #minimize.a2 {
+    border-color: transparent transparent #215576 transparent;
+}
+
+#music-player #progress {
+    background:#e9eef2;
+    height:5px;
+    transition:all 0.2s ease;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+}
+
+#music-player #progress:hover, #music-player #progress:hover .percentage {
+    height:10px;
+}
+
+#music-player #progress:hover .percentage span{
+    opacity:1;
+}
+
+#music-player #progress .percentage{
+    background:#3a9bd9;
+    height:5px;
+    transition:all 0.2s ease;
+}
+
+#music-player #progress .percentage span {
+    position:absolute;
+    opacity:0;
+    font-size:10px;
+    top:-2px;
+    z-index:5;
+    transition:all 0.5s ease;
+}
+
+#music-player #progress .percentage span:first-child {
+    color:#fff;
+    left:5px;
+}
+
+#music-player #progress .percentage span:last-child {
+    color:#3a9bd9;
+    right:5px;
+}
+
+#music-player #controls .btn {
+    float:left;
+    width:20%;
+    height:20px;
+}
+
+#music-player #controls .btn a.disabled {
+    cursor:default;
+
+}
+
+#music-player #controls .btn a.disabled i {
+    opacity:0.3;
+}
+
+#music-player #controls .btn i {
+    height:20px;
+    background:url(images/control-sprite.png);
+    opacity:0.7;
+    display:block;
+    margin:0 auto;
+    transition:opacity 0.2s ease;
+}
+
+#music-player #controls .btn i:hover {
+    opacity:1;
+}
+
+#music-player #controls .btn i.repeat {
+    background-position:0 0;
+    width:30px;
+}
+
+#music-player #controls .btn i.repeat.active {
+    background-position:0 -28px;
+    opacity:1;
+}
+
+#music-player #controls .btn i.repeat.one {
+    background-position:0 -54px;
+    opacity:1;
+}
+
+#music-player #controls .btn i.previous-song {
+    background-position:-40px 0;
+    width:23px;
+}
+
+#music-player #controls .btn i.previous-song.active {
+    background-position:-40px -27px;
+    opacity:1;
+}
+
+#music-player #controls .btn i.play {
+    background-position:-73px 0;
+    width:16px;
+}
+
+#music-player #controls .btn i.play.active {
+    background-position:-73px -28px;
+    opacity:1;
+}
+
+#music-player #controls .btn i.next-song {
+    background-position:-99px 0;
+    width:23px;
+}
+
+#music-player #controls .btn i.next-song.active {
+    background-position:-99px -27px;
+    opacity:1;
+}
+
+#music-player #controls .btn i.shuffle {
+    background-position:-132px 0;
+    width:28px;
+}
+
+#music-player #controls .btn i.shuffle.active {
+    background-position:-132px -28px;
+    opacity:1;
+}
+
+
+/* Music Player - Medium Size */
+
+#music-player.medium {
+
+}
+
+#music-player.medium  #track {
+    height:65px;
+    position:relative;
+    overflow:hidden;
+}
+
+#music-player.medium #track .art img{
+    width:100%;
+    position:absolute;
+    top:-50%;
+}
+
+#music-player.medium #track .overlay {
+    background:rgba(58,58,61,0.85);
+}
+
+#music-player.medium #track .overlay .song-title {
+    margin:10px 0 0 0;
+}
+
+#music-player.medium #controls {
+    padding:25px 0 20px 0;
+}
+
+/* Music Player - Mini Size */
+
+#music-player.mini #track {
+    display:none;
+}
+
+#music-player.mini #progress {
+    height:3px;
+}
+
+#music-player.mini #progress .percentage {
+    height:3px;
+}
+
+#music-player.mini #progress:hover, #music-player.mini #progress:hover .percentage {
+    height:5px;
+}
+
+#music-player.mini #controls {
+    padding:20px 0 15px 0;
+}
